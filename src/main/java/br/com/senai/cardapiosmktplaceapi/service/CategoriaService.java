@@ -34,8 +34,7 @@ public interface CategoriaService {
 			Status status,
 			@NotNull(message = "O tipo da categoria é obrigatório")
 			TipoDeCategoria tipo,
-			Pageable paginacao
-			);
+			Pageable paginacao);
 	
 	public Categoria buscarPor(
 			@NotNull(message = "O id é obrigatório")

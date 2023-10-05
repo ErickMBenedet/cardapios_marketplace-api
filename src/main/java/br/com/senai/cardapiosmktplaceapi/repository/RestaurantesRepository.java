@@ -41,16 +41,13 @@ public interface RestaurantesRepository extends JpaRepository<Restaurante, Integ
 	public Restaurante buscarPor(Integer id);
 	
 	@Modifying
-	@Query(value = 
-				"UPDATE Restaurante r "
-			  + "SET r.status = :status "
-		   	  + "WHERE r.id = :id")	
+	@Query(value = "UPDATE Restaurante r "
+			+ "SET r.status = :status "
+			+ "WHERE r.id = :id")	
 	public void atualizarPor(Integer id, Status status);
-	
-	@Query(value =
-				"SELECT Count(r) "
-				+ "FROM Restaurante r "
-				+ "WHERE r.categoria.id = :idDaCategoria")
+
+	@Query(value = "SELECT Count(r) "
+				 + "FROM Restaurante r "
+				 + "WHERE r.categoria.id = :idDaCategoria")
 	public Long contarPor(Integer idDaCategoria);
-	
 }

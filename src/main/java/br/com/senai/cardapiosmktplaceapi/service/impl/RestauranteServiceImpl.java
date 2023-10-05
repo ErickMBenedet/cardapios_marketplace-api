@@ -11,6 +11,7 @@ import com.google.common.base.Preconditions;
 import br.com.senai.cardapiosmktplaceapi.entity.Categoria;
 import br.com.senai.cardapiosmktplaceapi.entity.Restaurante;
 import br.com.senai.cardapiosmktplaceapi.entity.enums.Status;
+import br.com.senai.cardapiosmktplaceapi.repository.CardapiosRepository;
 import br.com.senai.cardapiosmktplaceapi.repository.RestaurantesRepository;
 import br.com.senai.cardapiosmktplaceapi.service.CategoriaService;
 import br.com.senai.cardapiosmktplaceapi.service.RestauranteService;
@@ -20,6 +21,9 @@ public class RestauranteServiceImpl implements RestauranteService {
 
 	@Autowired
 	private RestaurantesRepository repository;
+	
+	@Autowired
+	private CardapiosRepository cardapiosRepository;
 	
 	@Autowired
 	@Qualifier("categoriaServiceImpl")
@@ -61,8 +65,11 @@ public class RestauranteServiceImpl implements RestauranteService {
 
 	@Override
 	public Restaurante excluirPor(Integer id) {
-		
-		return null;
+		Restaurante restauranteEncontrado = buscarPor(id);
+		Long quantidadeDeCardapiosVinculados = cardapiosRepository.contarPor(id);
+		Preconditions.checkArgument(quantidadeDeCardapiosVinculados == 0, "Existem cardápios vinculados a esse restaurante");
+		this.repository.deleteById(id);
+		return restauranteEncontrado;
 	}
 
 }
